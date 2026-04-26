@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDM | Sobre Nós</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="/img/51 Sem Título_20250220100547.png" alt="Logo" class="logo-icon">
+            <span class="logo-text">Tabuleiros do Mundo</span>
+        </div>
+
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <nav class="main-nav" id="nav-list">
+             <a href="/home" class="nav-link">Início</a>
+             <a href="/catalogo" class="nav-link">Catálogo</a>
+             <a href="/sobre" class="nav-link active">Sobre Nós</a>
+             <a href="/" class="nav-link login">Login</a>
+        </nav>
+    </header>
+
+    <main class="hero-section">
+        <div class="hero-container">
+
+            <div class="about-intro reveal from-left">
+                <h1 class="hero-title">Resgatando a História, <br>Jogada a Jogada.</h1>
+                <p class="hero-subtitle">
+                    O Tabuleiros do Mundo é mais que um site. É um movimento dedicado a trazer de volta os
+                    jogos que moldaram civilizações.
+                </p>
+            </div>
+
+            <section class="team-section-fixed">
+                <h2 class="section-title">Quem Faz Acontecer</h2>
+
+                <div class="team-container">
+                    <div class="member-card active" onclick="selecionarMembro(this)">
+                        <div class="member-img-box">
+                            <img src="/img/kayron.jpeg" alt="Kayron">
+                        </div>
+                        <div class="member-content">
+                            <h3>John Kayron</h3>
+                            <span class="team-role">Dev Front-End</span>
+                            <p>Responsável por implementar interfaces dinâmicas e responsivas que garantem uma melhor UX e UI.</p>
+                        </div>
+                    </div>
+
+                    <div class="member-card" onclick="selecionarMembro(this)">
+                        <div class="member-img-box">
+                            <img src="/img/luiz.jpeg" alt="Felipe">
+                        </div>
+                        <div class="member-content">
+                            <h3>Luiz Felipe</h3>
+                            <span class="team-role">Scrum Master</span>
+                            <p>Responsável por promover a melhoria contínua dos processos, mantendo a equipe focada na entrega do projeto.</p>
+                        </div>
+                    </div>
+                    <div class="member-card" onclick="selecionarMembro(this)">
+                        <div class="member-img-box">
+                            <img src="/img/51 Sem Título_20250220100547.png" alt="Membro">
+                        </div>
+                        <div class="member-content">
+                            <h3>Isaac</h3>
+                            <span class="team-role">Dev Back-End</span>
+                            <p>Estruturar e gerenciar o banco de dados MySQL para suportar o acervo crescente de tabuleiros históricos.</p>
+                        </div>
+                    </div>
+                    <div class="member-card" onclick="selecionarMembro(this)">
+                        <div class="member-img-box">
+                            <img src="/img/51 Sem Título_20250220100547.png" alt="Membro">
+                        </div>
+                        <div class="member-content">
+                            <h3>Antony Gonçalves</h3>
+                            <span class="team-role">Web Designer</span>
+                            <p>Responsável por desenvolver layouts focados em acessibilidade, garantindo que o conteúdo histórico seja legível e atraente para todos os públicos.</p>
+                        </div>
+                    </div>
+                    <div class="member-card" onclick="selecionarMembro(this)">
+                        <div class="member-img-box">
+                            <img src="/img/51 Sem Título_20250220100547.png" alt="Membro">
+                        </div>
+                        <div class="member-content">
+                            <h3>Fabricio Leão</h3>
+                            <span class="team-role">Dev Back-End</span>
+                            <p>Criar scripts de automação para a inserção em massa de novos jogos, facilitando a expansão do inventário digital.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="impact-section">
+                <h2 class="section-title reveal from-left">Onde Atuamos</h2>
+                <p class="section-desc reveal from-right">Levamos a ludoteca itinerante para onde o conhecimento precisa
+                    estar.</p>
+
+                <div class="impact-grid">
+
+                    <div class="impact-card reveal from-left">
+                        <div class="impact-icon">🏫</div>
+                        <h3>Escolas</h3>
+                        <p>Oficinas pedagógicas que ensinam matemática e história através de jogos milenares.</p>
+                        <img src="/img/escola2.jpg" alt="Escola" class="impact-img"
+                            style="border-radius: 10px; margin-top: 15px;">
+                    </div>
+
+                    <div class="impact-card reveal from-right">
+                        <div class="impact-icon">🌳</div>
+                        <h3>Praças e Parques</h3>
+                        <p>Intervenções culturais abertas ao público, reunindo jovens e adultos em torno do tabuleiro.
+                        </p>
+                        <img src="/img/comunidade.jpg" alt="Praça" class="impact-img"
+                            style="border-radius: 10px; margin-top: 15px;">
+                    </div>
+
+                    <div class="impact-card reveal from-left">
+                        <div class="impact-icon">🎓</div>
+                        <h3>Faculdades</h3>
+                        <p>Palestras e workshops sobre design de jogos, antropologia e gamificação.</p>
+                        <img src="/img/evento.jpg" alt="Faculdade" class="impact-img"
+                            style="border-radius: 10px; margin-top: 15px;">
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2025 Tabuleiros do Mundo. Conectando gerações.</p>
+        <div class="footer-links">
+            <a href="https://www.instagram.com/tabuleirosdomundo">Siga nossa jornada no Instagram</a>
+        </div>
+    </footer>
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

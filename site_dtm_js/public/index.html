@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDM | Acesso</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+    <img src="/img/51 Sem Título_20250220100547.png" alt="Logo Fundo" class="giant-icon">
+
+    <div class="login-container" id="main-container">
+
+        <form id="form-login" onsubmit="event.preventDefault(); processarLogin();">
+            <h2>Login</h2>
+            <label for="usuario">Usuário (Nome):</label>
+            <input type="text" id="usuario" name="usuario" required>
+
+            <label for="senha_login">Senha:</label>
+            <input type="password" id="senha_login" name="senha" required>
+
+            <div id="msg-login" style="margin: 10px 0; font-size: 0.9rem; font-weight: bold;"></div>
+
+            <button type="submit">ENTRAR</button>
+
+            <div class="toggle-link">
+                Não tem uma conta? <span onclick="mostrarCadastro()">Cadastre-se</span>
+            </div>
+            <a href="javascript:void(0)" class="forgot-link" onclick="mostrarRecuperar()">Esqueci minha senha</a>
+        </form>
+
+        <form id="form-cadastro" onsubmit="event.preventDefault(); processarCadastro();">
+            <h2>Cadastro</h2>
+
+            <label>Nome Completo:</label>
+            <input type="text" id="cad_nome" placeholder="Ex: João Silva" required>
+
+            <label>Nome de Usuário (Login):</label>
+            <input type="text" id="cad_usuario" placeholder="Ex: joao_tdm ou joao@2026" required>
+
+            <label>E-mail:</label>
+            <input type="email" id="cad_email" placeholder="Ex: raposa@gmail.com" required>
+
+            <label>Telefone:</label>
+            <input type="text" id="cad_telefone" placeholder="(98) 9...">
+
+            <label>Crie uma Senha:</label>
+            <input type="password" id="cad_senha" placeholder="Mínimo 6 caracteres" required>
+
+            <div id="msg-cadastro" style="margin: 10px 0; font-size: 0.9rem; font-weight: bold;"></div>
+
+            <button type="submit">CADASTRAR</button>
+
+            <div class="toggle-link">
+                Já possui conta? <span onclick="mostrarLogin()">Faça Login</span>
+            </div>
+        </form>
+
+        <form id="form-recuperar" onsubmit="event.preventDefault(); processarRecuperacao();">
+            <h2>Redefinir Senha</h2>
+            <p>Valide seus dados para cadastrar uma nova senha.</p>
+
+            <label>Usuário:</label>
+            <input type="text" id="rec_usuario" placeholder="Seu nome de usuário" required>
+
+            <label>E-mail:</label>
+            <input type="email" id="rec_email" placeholder="E-mail cadastrado" required>
+
+            <label>Nova Senha:</label>
+            <input type="password" id="rec_nova_senha" placeholder="Mínimo 6 caracteres" required>
+
+            <div id="mensagem-retorno" style="margin: 10px 0; font-size: 0.9rem; font-weight: bold;"></div>
+
+            <button type="submit">ALTERAR SENHA</button>
+
+            <div class="toggle-link">
+                Lembrou? <span onclick="mostrarLogin()">Voltar ao Login</span>
+            </div>
+        </form>
+
+    </div>
+
+    <script>
+        const formLogin = document.getElementById('form-login');
+        const formCadastro = document.getElementById('form-cadastro');
+        const formRecuperar = document.getElementById('form-recuperar');
+        const container = document.getElementById('main-container');
+
+        function ocultarTodos() {
+            formLogin.style.display = 'none';
+            formCadastro.style.display = 'none';
+            formRecuperar.style.display = 'none';
+        }
+
+        function mostrarLogin() {
+            ocultarTodos();
+            formLogin.style.display = 'block';
+            container.classList.remove('cadastro-mode');
+        }
+
+        function mostrarCadastro() {
+            ocultarTodos();
+            formCadastro.style.display = 'block';
+            container.classList.add('cadastro-mode');
+        }
+
+        function mostrarRecuperar() {
+            ocultarTodos();
+            formRecuperar.style.display = 'block';
+            container.classList.remove('cadastro-mode');
+        }
+
+        async function processarLogin() {
+    const usuario = document.getElementById('usuario').value;
+    const senha = document.getElementById('senha_login').value;
+    const msg = document.getElementById('msg-login');
+
+    msg.innerHTML = 'Processando...';
+    msg.style.color = 'white';
+
+    try {
+        const res = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario, senha })
+        });
+
+        if (res.redirected) {
+            window.location.href = res.url;
+            return;
+        }
+
+        const texto = await res.text();
+        if (texto.includes('alert')) {
+            msg.style.color = '#e74c3c';
+            msg.innerHTML = 'Usuário ou senha incorretos.';
+        }
+    } catch (e) {
+        msg.innerHTML = 'Erro ao conectar com o servidor.';
+    }
+}
+
+async function processarCadastro() {
+    const msg = document.getElementById('msg-cadastro');
+    msg.innerHTML = 'Processando...';
+    msg.style.color = 'white';
+
+    try {
+        const res = await fetch('/cadastro', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome: document.getElementById('cad_nome').value,
+                usuario: document.getElementById('cad_usuario').value,
+                email: document.getElementById('cad_email').value,
+                telefone: document.getElementById('cad_telefone').value,
+                senha: document.getElementById('cad_senha').value
+            })
+        });
+
+        const texto = await res.text();
+        if (texto.includes('alert')) {
+            msg.style.color = '#2ecc71';
+            msg.innerHTML = 'Cadastro realizado! Faça login.';
+            setTimeout(() => { mostrarLogin(); }, 2000);
+        } else {
+            msg.style.color = '#e74c3c';
+            msg.innerHTML = texto || 'Erro no cadastro.';
+        }
+    } catch (e) {
+        msg.innerHTML = 'Erro ao conectar com o servidor.';
+    }
+}
+
+async function processarRecuperacao() {
+    const usuario = document.getElementById('rec_usuario').value;
+    const email = document.getElementById('rec_email').value;
+    const novaSenha = document.getElementById('rec_nova_senha').value;
+    const msg = document.getElementById('mensagem-retorno');
+
+    msg.innerHTML = 'Processando...';
+    msg.style.color = 'white';
+
+    try {
+        const res = await fetch('/rec_senha', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario, email, nova_senha: novaSenha })
+        });
+
+        const data = await res.json();
+
+        if (data.sucesso) {
+            msg.style.color = '#2ecc71';
+            msg.innerHTML = data.mensagem;
+            setTimeout(() => { mostrarLogin(); }, 2000);
+        } else {
+            msg.style.color = '#e74c3c';
+            msg.innerHTML = data.mensagem;
+        }
+    } catch (e) {
+        msg.innerHTML = 'Erro ao conectar com o servidor.';
+    }
+}
+    </script>
+</body>
+</html>

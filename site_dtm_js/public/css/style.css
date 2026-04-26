@@ -1,0 +1,783 @@
+/*==================================================
+  1. VARIÁVEIS E RESET PROFISSIONAL
+  ==================================================*/
+:root {
+  --header-bg: #d9d2b6; /* Marrom muito claro/bege */
+  --hero-bg-start: #fff3e0; /* Laranja quase branco */
+  --hero-bg-end: #f5f5f5; /* Cinza muito claro */
+  --text-dark: #2c250b; /* Mantemos o texto escuro */
+  --text-light: #4a4123; /* Invertemos: o que era branco vira marrom */
+  --logo-gold: #b37d00; /* Dourado mais escuro para leitura no fundo claro */
+  --card-glass: #b37d0053; /* Sombra sutil em vez de brilho */
+}
+/* Classe que será aplicada ao body via JavaScript */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--hero-bg-end);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease; /* Transição suave para modo claro/escuro */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/*==================================================
+  2. HEADER E NAVEGAÇÃO
+  ==================================================*/
+.main-header {
+  background-color: var(--header-bg);
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: clamp(35px, 8vw, 45px);
+  height: auto;
+  margin-right: 12px;
+}
+
+.logo-text {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-weight: 700;
+  color: var(--logo-gold);
+}
+
+.main-nav .nav-link {
+  color: var(--text-light);
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.main-nav .nav-link:hover,
+.main-nav .nav-link.active {
+  color: var(--logo-gold);
+  border-bottom: 2px solid var(--logo-gold);
+}
+
+/*==================================================
+  3. FLUXO HERO (O CONTEÚDO CENTRAL)
+  ==================================================*/
+.hero-section {
+  flex: 1 0 auto; /* Empurra o footer para o fundo */
+  padding: 60px 5% 100px 5%;
+  background: linear-gradient(
+    180deg,
+    var(--hero-bg-start) 0%,
+    var(--hero-bg-end) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.center-icon {
+  width: 90%;
+  max-width: 280px;
+  height: auto !important;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+}
+
+.hero-title {
+  font-size: clamp(1.6rem, 7vw, 3rem);
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.95rem, 3vw, 1.2rem);
+  max-width: 750px;
+  margin: 0 auto 50px auto;
+  color: var(--text-dark);
+}
+
+/*==================================================
+  4. FILTROS E BUSCA (GLASSMORPHISM)
+  ==================================================*/
+.filter-wrapper {
+  width: 100%;
+  max-width: 800px;
+  background: var(--card-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  width: 100%;
+  background: white;
+  border-radius: 50px;
+  padding: 5px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  outline: none;
+  border-radius: 50px;
+}
+
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 2px solid #b37d00;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  background: var(--hero-accent);
+  color: var(--text-dark);
+}
+
+/*==================================================
+  5. GRIDS E CARDS (JOGOS E INFORMAÇÕES)
+  ==================================================*/
+/*==================================================
+  5. GRIDS E CARDS (SEPARADOS E CORRIGIDOS)
+  ==================================================*/
+
+/* --- CONFIGURAÇÃO DO GRID (Serve para ambos) --- */
+.game-grid,
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==================================================
+   A. CARDS DA HOME (.info-card) - ESTILO SIMPLES
+   (Isso conserta a sua página inicial)
+   ================================================== */
+.info-card {
+  background: var(--card-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px 20px;
+  display: flex; /* Garante que o conteúdo se alinhe */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease; /* Animação simples de flutuar */
+
+  /* IMPORTANTE: Removemos height fixa e perspective daqui */
+  height: auto;
+  min-height: 200px;
+}
+
+.info-card:hover {
+  transform: translateY(-10px); /* Apenas sobe um pouco, não gira */
+  background: rgba(179, 125, 0, 0.1); /* Leve toque dourado no fundo */
+}
+
+/* ==================================================
+   B. CARDS DO CATÁLOGO (.game-card) - ESTILO 3D
+   (Isso mantém o efeito de girar no catálogo)
+   ================================================== */
+.game-card {
+  background-color: transparent !important;
+  perspective: 1000px;
+  height: 450px; /* Altura fixa necessária para o 3D */
+  width: 100%;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Motor do giro (Só existe no Catálogo) */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.game-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Faces do card 3D */
+.card-front,
+.card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--card-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.card-front {
+  z-index: 2;
+  justify-content: flex-start;
+}
+
+.card-back {
+  z-index: 1;
+  transform: rotateY(180deg);
+  justify-content: center;
+  background: var(--card-glass);
+  color: #000000;
+}
+
+/* Imagens do Catálogo */
+/* Container da Imagem (A Moldura) */
+.game-image {
+  width: 100%;
+  height: 220px; /* A altura fixa da moldura */
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Fundo cinza caso a imagem demore a carregar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A Imagem em si (O Conteúdo) */
+/* FORÇANDO A IMAGEM A NÃO ESTICAR */
+.game-img-obj {
+  width: 100% !important; /* Ocupa toda a largura da moldura */
+  height: 100% !important; /* Ocupa toda a altura da moldura */
+
+  /* O SEGREDO: COVER */
+  object-fit: contain !important;
+  /* "Cover" manda a imagem preencher o espaço cortando as sobras, 
+       mantendo a proporção original. */
+
+  object-position: center !important; /* Centraliza o corte */
+  display: block !important; /* Remove espaços fantasmas abaixo da imagem */
+  border-radius: 15px; /* Garante que a imagem arredonde junto com a borda */
+  background-color: transparent !important; /* Garante que o fundo da imagem seja transparente */
+}
+/*==================================================
+  6. FOOTER E MOBILE
+  ==================================================*/
+.main-footer {
+  flex-shrink: 0;
+  background-color: var(--header-bg);
+  color: var(--text-light);
+  padding: 40px 5%;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+  } /* Menu hambúrguer ativado via JS */
+
+  .hero-section {
+    padding: 40px 15px;
+  }
+
+  .game-grid,
+  .info-grid {
+    grid-template-columns: 1fr;
+    max-width: 340px; /* Impede card gigante no mobile */
+    margin: 0 auto;
+  }
+}
+
+/* Filtro JS */
+.game-card.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
+/* Ajuste específico para páginas de Login/Recuperação */
+.auth-page .filter-wrapper {
+  background: rgba(255, 255, 255, 0.08); /* Um pouco mais sutil */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-page .search-box input {
+  color: var(--text-dark);
+}
+/*==================================================
+  6. RESPONSIVIDADE E MENU MOBILE (HAMBÚRGUER)
+  ==================================================*/
+/*==================================================
+  6. MENU HAMBÚRGUER E RESPONSIVIDADE
+  ==================================================*/
+
+/* Esconde o botão hambúrguer no Desktop */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--logo-gold); /* Cor das barrinhas */
+  transition: 0.4s;
+  border-radius: 5px;
+}
+
+/* Regras APENAS para Celular/Tablet (telas menores que 768px) */
+@media (max-width: 768px) {
+  /* Mostra o botão hambúrguer */
+  .menu-toggle {
+    display: flex;
+    z-index: 2001; /* Fica acima de tudo */
+  }
+
+  /* Esconde o menu normal */
+  .main-nav {
+    display: none; /* Escondido por padrão */
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* Cola logo abaixo do header */
+    left: 0;
+    width: 100%;
+    background-color: var(--header-bg); /* Mesma cor do header */
+    padding: 20px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Animação de entrada */
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  /* CLASSE MÁGICA: Quando o JS adicionar 'active', o menu aparece */
+  .main-nav.active {
+    display: flex;
+  }
+
+  .main-nav .nav-link {
+    margin: 15px 0;
+    text-align: center;
+    display: block;
+    font-size: 1.1rem;
+  }
+
+  /* EFEITO X (Transforma o hambúrguer em X) */
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0; /* A barra do meio some */
+  }
+
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* 4. ESTILO DA BARRA DE PESQUISA (CSS) */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 40px auto; /* Espaço em cima e embaixo */
+  padding: 0 20px;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.search-box,
+.filter-box {
+  background: var(--card-glass); /* Fundo de vidro igual aos cards */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-dark); /* Certifique-se que essa cor existe ou use #333 */
+  font-size: 1rem;
+  width: 200px;
+}
+
+.filter-box select {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-dark);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Ajuste para celular */
+@media (max-width: 600px) {
+  .filter-container {
+    flex-direction: column;
+  }
+  .search-box input {
+    width: 100%;
+  }
+}
+/* ==================================================
+   PÁGINA SOBRE NÓS (COMUNIDADE)
+   ================================================== */
+
+/* ==================================================
+   PÁGINA SOBRE NÓS (ESTILO COMPLETO)
+   ================================================== */
+
+/* Ajuste do Texto de Introdução */
+.about-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+/* --- SEÇÃO QUEM SOMOS (KAYRON) --- */
+.team-section {
+    margin-bottom: 80px;
+}
+
+.team-card {
+    background: var(--card-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 950px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.team-img-wrapper {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--logo-gold);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.team-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-info {
+    flex: 1;
+}
+
+.team-info h3 {
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.team-role {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--logo-gold);
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-info p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4a4123;
+}
+
+
+
+/* --- SEÇÃO ONDE ATUAMOS (ESTRUTURA ZIGUE-ZAGUE) --- */
+.impact-section {
+    text-align: center;
+    padding-bottom: 80px;
+}
+
+.section-desc {
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+}
+
+/* Transformamos o grid em container flex para o zigue-zague funcionar */
+.impact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.impact-card {
+    background: #d9d2b6;
+    padding: 40px;
+    border-radius: 30px;
+    display: flex; /* Alinha conteúdo e imagem lado a lado */
+    align-items: center;
+    gap: 50px;
+    text-align: left; /* Texto alinhado à esquerda por padrão */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.8s, background 0.3s;
+}
+
+.impact-card:hover {
+    transform: translateY(-5px);
+    background: #b37d00;
+}
+
+/* Container do texto dentro do card de impacto */
+.impact-content {
+    flex: 1;
+}
+
+/* Imagens dos Cards de Impacto */
+.impact-img {
+    width: 350px;        /* Largura maior para o zigue-zague */
+    height: 250px;       /* Altura fixa */
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* --- LÓGICA DO ZIGUE-ZAGUE --- */
+/* Inverte a ordem apenas dos cards PARES (2º, 4º...) */
+.impact-card:nth-child(even) {
+    flex-direction: row-reverse;
+    text-align: right; /* Texto alinha à direita no card invertido */
+}
+
+.impact-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.impact-card h3 {
+    color: var(--text-dark);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+
+
+/* --- RESPONSIVIDADE PARA CELULAR --- */
+@media (max-width: 768px) {
+    .team-card, 
+    .impact-card, 
+    .impact-card:nth-child(even) {
+        flex-direction: column !important; /* Empilha no mobile */
+        text-align: center !important;
+        padding: 30px 20px;
+    }
+
+    .team-img-wrapper {
+        width: 150px;
+        height: 150px;
+    }
+
+    .impact-img {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+/* ==================================================
+   ANIMAÇÕES DE SCROLL (REVEAL)
+   ================================================== */
+
+.reveal {
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.from-left {
+    transform: translateX(-100px);
+}
+
+.from-right {
+    transform: translateX(100px);
+}
+
+.reveal.active {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+.team-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 50px auto;
+    height: 400px;
+    align-items: stretch;
+}
+
+.member-card {
+    flex: 1; /* Todos começam com o mesmo tamanho */
+    background: var(--card-glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+}
+
+/* O CARD ATIVO FICA MAIOR */
+.member-card.active {
+    flex: 4; /* Ocupa muito mais espaço que os outros */
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.member-img-box {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    margin-right: 30px;
+}
+
+.member-img-box img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--logo-gold);
+}
+
+/* CONTEÚDO (Escondido nos cards pequenos) */
+.member-content {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: 0.4s;
+    white-space: nowrap; /* Evita que o texto quebre enquanto abre */
+}
+
+.member-card.active .member-content {
+    opacity: 1;
+    transform: translateX(0);
+    white-space: normal;
+}
+
+.member-content h3 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .team-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .member-card.active {
+        flex: none;
+        height: 300px;
+    }
+}

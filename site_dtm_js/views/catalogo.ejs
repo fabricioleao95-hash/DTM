@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TDM | Catálogo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="logo-container">
+      <img src="/img/51 Sem Título_20250220100547.png" alt="Logo" class="logo-icon">
+      <span class="logo-text">Tabuleiros do Mundo</span>
+    </div>
+    <div class="menu-toggle">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <nav class="main-nav" id="nav-list">
+      <a href="/home" class="nav-link">Início</a>
+      <a href="/catalogo" class="nav-link">Catálogo</a>
+      <a href="/sobre" class="nav-link">Sobre Nós</a>
+      <a href="/" class="nav-link login">Login</a>
+    </nav>
+  </header>
+
+  <main class="hero-section">
+    <div class="hero-container">
+      <img src="/img/51 Sem Título_20250220100547.png" alt="Logo" class="center-icon">
+      <h1 class="hero-title">Descubra o Seu Próximo Jogo Favorito!</h1>
+      <p class="hero-subtitle">Mais de 50 títulos catalogados.</p>
+
+      <div class="filter-container">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Busque por nome...">
+        </div>
+        <div class="filter-box">
+          <select id="categoryFilter">
+            <option value="all">Todas as Categorias</option>
+            <option value="estrategia">🧠 Estratégia</option>
+            <option value="sorte">🎲 Sorte / Corrida</option>
+            <option value="familia">👨‍👩‍👧‍👦 Família</option>
+            <option value="infantil">🧸 Infantil</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <% jogos.forEach(jogo => { %>
+          <div class="game-card"
+               data-title="<%= jogo.titulo.toLowerCase() %>"
+               data-category="<%= jogo.categoria.toLowerCase() %>">
+            <div class="card-inner">
+
+              <div class="card-front">
+                <div class="game-image">
+                  <img src="<%= jogo.imagem_url %>" alt="<%= jogo.titulo %>" class="game-img-obj">
+                </div>
+                <div class="game-info">
+                  <h3 class="game-title"><%= jogo.titulo %></h3>
+                  <div class="game-details">
+                    <span>⭐ <%= jogo.nota %></span>
+                    <span> - </span>
+                    <span>👥 <%= jogo.jogadores %></span>
+                    <span> - </span>
+                    <span><%= jogo.origem %></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-back">
+                <h3 class="game-title">Resumo</h3>
+                <p class="game-description"><%= jogo.historiaShort %></p>
+                <a href="/tabuleiro?id=<%= jogo.id %>" class="btn-details">VER DETALHES</a>
+              </div>
+
+            </div>
+          </div>
+        <% }); %>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <p>© 2025 Tabuleiros do Mundo.</p>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/tabuleirosdomundo">Instagram</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById('searchInput');
+      const categoryFilter = document.getElementById('categoryFilter');
+      const cards = document.querySelectorAll('.game-card');
+
+      function filterGames() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedCategory = categoryFilter.value.toLowerCase();
+
+        cards.forEach(card => {
+          const gameTitle = card.getAttribute('data-title');
+          const gameCategory = card.getAttribute('data-category');
+          const matchesSearch = gameTitle.includes(searchTerm);
+          const matchesCategory = selectedCategory === 'all' || gameCategory === selectedCategory;
+
+          card.style.display = (matchesSearch && matchesCategory) ? 'block' : 'none';
+        });
+      }
+
+      searchInput.addEventListener('input', filterGames);
+      categoryFilter.addEventListener('change', filterGames);
+    });
+  </script>
+  <script src="/js/script.js"></script>
+</body>
+</html>
