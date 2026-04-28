@@ -781,3 +781,102 @@ body {
         height: 300px;
     }
 }
+/* Botão flutuante */
+.btn-add-jogo {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+  transition: background 0.3s;
+}
+.btn-add-jogo:hover {
+  background-color: #d35400;
+}
+
+/* Overlay do modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.ativo {
+  display: flex;
+}
+
+/* Caixa do modal */
+.modal-box {
+  background: #1e1e2e;
+  color: #eee;
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+.modal-box h2 {
+  margin-bottom: 20px;
+  color: #e67e22;
+}
+.modal-box label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+.modal-box input,
+.modal-box select,
+.modal-box textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: #2a2a3e;
+  color: #eee;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.modal-box textarea {
+  resize: vertical;
+}
+
+/* Botões do modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+.modal-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-actions button[type="button"] {
+  background: #444;
+  color: #eee;
+}
+.modal-actions button[type="submit"] {
+  background: #e67e22;
+  color: white;
+}
+.modal-actions button:hover {
+  opacity: 0.85;
+}

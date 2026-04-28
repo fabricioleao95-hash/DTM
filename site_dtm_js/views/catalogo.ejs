@@ -84,6 +84,52 @@
       </div>
 
     </div>
+      <!-- Botão flutuante de adicionar -->
+  <button class="btn-add-jogo" onclick="abrirModal()">＋ Adicionar Jogo</button>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
+    <div class="modal-box">
+      <h2>Adicionar Novo Jogo</h2>
+      <form action="/catalogo/adicionar" method="POST">
+
+        <label>Título *</label>
+        <input type="text" name="titulo" required placeholder="Ex: Xadrez">
+
+        <label>Origem</label>
+        <input type="text" name="origem" placeholder="Ex: Índia / Europa">
+
+        <label>Jogadores</label>
+        <input type="text" name="jogadores" placeholder="Ex: 2 jogadores">
+
+        <label>URL da Imagem</label>
+        <input type="text" name="imagem_url" placeholder="https://...">
+
+        <label>Categoria</label>
+        <select name="categoria">
+          <option value="estrategia">🧠 Estratégia</option>
+          <option value="sorte">🎲 Sorte / Corrida</option>
+          <option value="familia">👨‍👩‍👧‍👦 Família</option>
+          <option value="infantil">🧸 Infantil</option>
+        </select>
+
+        <label>Nota (0 a 5)</label>
+        <input type="number" name="nota" min="0" max="5" step="0.1" placeholder="Ex: 4.5">
+
+        <label>História</label>
+        <textarea name="historia" rows="3" placeholder="Conte a história do jogo..."></textarea>
+
+        <label>Regras</label>
+        <textarea name="regras" rows="3" placeholder="Descreva as regras principais..."></textarea>
+
+        <div class="modal-actions">
+          <button type="button" onclick="fecharModalBtn()">Cancelar</button>
+          <button type="submit">Salvar Jogo</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
   </main>
 
   <footer class="main-footer">
@@ -116,6 +162,17 @@
       searchInput.addEventListener('input', filterGames);
       categoryFilter.addEventListener('change', filterGames);
     });
+  function abrirModal() {
+    document.getElementById('modalOverlay').classList.add('ativo');
+  }
+  function fecharModalBtn() {
+    document.getElementById('modalOverlay').classList.remove('ativo');
+  }
+  function fecharModal(event) {
+    if (event.target.id === 'modalOverlay') {
+      fecharModalBtn();
+    }
+  }
   </script>
   <script src="/js/script.js"></script>
 </body>
