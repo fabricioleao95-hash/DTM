@@ -880,3 +880,20 @@ body {
 .modal-actions button:hover {
   opacity: 0.85;
 }
+/* Botão excluir no card */
+.btn-excluir {
+  margin-top: 10px;
+  background-color: #c0392b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+.btn-excluir:hover {
+  background-color: #96281b;
+}

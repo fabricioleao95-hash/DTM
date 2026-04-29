@@ -51,4 +51,23 @@ router.post('/adicionar', (req, res) => {
   });
 });
 
+// POST - exclui jogo
+router.post('/excluir/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (!id) {
+    return res.status(400).send('ID inválido.');
+  }
+
+  db.run('DELETE FROM jogos_info WHERE id = ?', [id], function (err) {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Erro ao excluir jogo: ' + err.message);
+    }
+
+    res.redirect('/catalogo');
+  });
+});
+
+// ← apenas UM module.exports no final
 module.exports = router;

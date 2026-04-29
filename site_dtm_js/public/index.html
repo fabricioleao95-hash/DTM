@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDM | Acesso</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body>
 
     <img src="/img/51 Sem Título_20250220100547.png" alt="Logo Fundo" class="giant-icon">
@@ -112,97 +114,98 @@
         }
 
         async function processarLogin() {
-    const usuario = document.getElementById('usuario').value;
-    const senha = document.getElementById('senha_login').value;
-    const msg = document.getElementById('msg-login');
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha_login').value;
+            const msg = document.getElementById('msg-login');
 
-    msg.innerHTML = 'Processando...';
-    msg.style.color = 'white';
+            msg.innerHTML = 'Processando...';
+            msg.style.color = 'white';
 
-    try {
-        const res = await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario, senha })
-        });
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, senha })
+                });
 
-        if (res.redirected) {
-            window.location.href = res.url;
-            return;
+                if (res.redirected) {
+                    window.location.href = res.url;
+                    return;
+                }
+
+                const texto = await res.text();
+                if (texto.includes('alert')) {
+                    msg.style.color = '#e74c3c';
+                    msg.innerHTML = 'Usuário ou senha incorretos.';
+                }
+            } catch (e) {
+                msg.innerHTML = 'Erro ao conectar com o servidor.';
+            }
         }
 
-        const texto = await res.text();
-        if (texto.includes('alert')) {
-            msg.style.color = '#e74c3c';
-            msg.innerHTML = 'Usuário ou senha incorretos.';
+        async function processarCadastro() {
+            const msg = document.getElementById('msg-cadastro');
+            msg.innerHTML = 'Processando...';
+            msg.style.color = 'white';
+
+            try {
+                const res = await fetch('/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nome: document.getElementById('cad_nome').value,
+                        usuario: document.getElementById('cad_usuario').value,
+                        email: document.getElementById('cad_email').value,
+                        telefone: document.getElementById('cad_telefone').value,
+                        senha: document.getElementById('cad_senha').value
+                    })
+                });
+
+                const texto = await res.text();
+                if (texto.includes('alert')) {
+                    msg.style.color = '#2ecc71';
+                    msg.innerHTML = 'Cadastro realizado! Faça login.';
+                    setTimeout(() => { mostrarLogin(); }, 2000);
+                } else {
+                    msg.style.color = '#e74c3c';
+                    msg.innerHTML = texto || 'Erro no cadastro.';
+                }
+            } catch (e) {
+                msg.innerHTML = 'Erro ao conectar com o servidor.';
+            }
         }
-    } catch (e) {
-        msg.innerHTML = 'Erro ao conectar com o servidor.';
-    }
-}
 
-async function processarCadastro() {
-    const msg = document.getElementById('msg-cadastro');
-    msg.innerHTML = 'Processando...';
-    msg.style.color = 'white';
+        async function processarRecuperacao() {
+            const usuario = document.getElementById('rec_usuario').value;
+            const email = document.getElementById('rec_email').value;
+            const novaSenha = document.getElementById('rec_nova_senha').value;
+            const msg = document.getElementById('mensagem-retorno');
 
-    try {
-        const res = await fetch('/cadastro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                nome: document.getElementById('cad_nome').value,
-                usuario: document.getElementById('cad_usuario').value,
-                email: document.getElementById('cad_email').value,
-                telefone: document.getElementById('cad_telefone').value,
-                senha: document.getElementById('cad_senha').value
-            })
-        });
+            msg.innerHTML = 'Processando...';
+            msg.style.color = 'white';
 
-        const texto = await res.text();
-        if (texto.includes('alert')) {
-            msg.style.color = '#2ecc71';
-            msg.innerHTML = 'Cadastro realizado! Faça login.';
-            setTimeout(() => { mostrarLogin(); }, 2000);
-        } else {
-            msg.style.color = '#e74c3c';
-            msg.innerHTML = texto || 'Erro no cadastro.';
+            try {
+                const res = await fetch('/rec_senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, email, nova_senha: novaSenha })
+                });
+
+                const data = await res.json();
+
+                if (data.sucesso) {
+                    msg.style.color = '#2ecc71';
+                    msg.innerHTML = data.mensagem;
+                    setTimeout(() => { mostrarLogin(); }, 2000);
+                } else {
+                    msg.style.color = '#e74c3c';
+                    msg.innerHTML = data.mensagem;
+                }
+            } catch (e) {
+                msg.innerHTML = 'Erro ao conectar com o servidor.';
+            }
         }
-    } catch (e) {
-        msg.innerHTML = 'Erro ao conectar com o servidor.';
-    }
-}
-
-async function processarRecuperacao() {
-    const usuario = document.getElementById('rec_usuario').value;
-    const email = document.getElementById('rec_email').value;
-    const novaSenha = document.getElementById('rec_nova_senha').value;
-    const msg = document.getElementById('mensagem-retorno');
-
-    msg.innerHTML = 'Processando...';
-    msg.style.color = 'white';
-
-    try {
-        const res = await fetch('/rec_senha', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usuario, email, nova_senha: novaSenha })
-        });
-
-        const data = await res.json();
-
-        if (data.sucesso) {
-            msg.style.color = '#2ecc71';
-            msg.innerHTML = data.mensagem;
-            setTimeout(() => { mostrarLogin(); }, 2000);
-        } else {
-            msg.style.color = '#e74c3c';
-            msg.innerHTML = data.mensagem;
-        }
-    } catch (e) {
-        msg.innerHTML = 'Erro ao conectar com o servidor.';
-    }
-}
     </script>
 </body>
+
 </html>

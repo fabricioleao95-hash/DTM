@@ -3,7 +3,7 @@
     "development"
   ],
   "hints": {
-    "compat-api/css": [
+    "compat-apicss": [
       "default",
       {
         "ignore": [
