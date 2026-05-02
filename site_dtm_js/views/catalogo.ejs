@@ -78,18 +78,17 @@
               </div>
 
               <div class="card-back">
-                <h3 class="game-title">Resumo</h3>
-                <p class="game-description">
-                  <%= jogo.historiaShort %>
-                </p>
-                <a href="/tabuleiro?id=<%= jogo.id %>" class="btn-details">VER DETALHES</a>
+  <h3 class="game-title">Resumo</h3>
+  <p class="game-description"><%= jogo.historiaShort %></p>
+  <a href="/tabuleiro?id=<%= jogo.id %>" class="btn-details">VER DETALHES</a>
 
-                <!-- Botão excluir -->
-                <form action="/catalogo/excluir/<%= jogo.id %>" method="POST"
-                  onsubmit="return confirmarExclusao('<%= jogo.titulo %>')">
-                  <button type="submit" class="btn-excluir">🗑 Excluir</button>
-                </form>
-              </div>
+  <% if (isAdmin) { %>
+    <form action="/catalogo/excluir/<%= jogo.id %>" method="POST"
+          onsubmit="return confirmarExclusao('<%= jogo.titulo %>')">
+      <button type="submit" class="btn-excluir">🗑 Excluir</button>
+    </form>
+  <% } %>
+</div>
 
             </div>
           </div>
@@ -97,52 +96,54 @@
       </div>
 
     </div>
-    <!-- Botão flutuante de adicionar -->
-    <button class="btn-add-jogo" onclick="abrirModal()">＋ Adicionar Jogo</button>
+    <% if (isAdmin) { %>
+  <!-- Botão flutuante de adicionar -->
+  <button class="btn-add-jogo" onclick="abrirModal()">＋ Adicionar Jogo</button>
 
-    <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
-      <div class="modal-box">
-        <h2>Adicionar Novo Jogo</h2>
-        <form action="/catalogo/adicionar" method="POST">
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
+    <div class="modal-box">
+      <h2>Adicionar Novo Jogo</h2>
+      <form action="/catalogo/adicionar" method="POST">
 
-          <label>Título *</label>
-          <input type="text" name="titulo" required placeholder="Ex: Xadrez">
+        <label>Título *</label>
+        <input type="text" name="titulo" required placeholder="Ex: Xadrez">
 
-          <label>Origem</label>
-          <input type="text" name="origem" placeholder="Ex: Índia / Europa">
+        <label>Origem</label>
+        <input type="text" name="origem" placeholder="Ex: Índia / Europa">
 
-          <label>Jogadores</label>
-          <input type="text" name="jogadores" placeholder="Ex: 2 jogadores">
+        <label>Jogadores</label>
+        <input type="text" name="jogadores" placeholder="Ex: 2 jogadores">
 
-          <label>URL da Imagem</label>
-          <input type="text" name="imagem_url" placeholder="https://...">
+        <label>URL da Imagem</label>
+        <input type="text" name="imagem_url" placeholder="https://...">
 
-          <label>Categoria</label>
-          <select name="categoria">
-            <option value="estrategia">🧠 Estratégia</option>
-            <option value="sorte">🎲 Sorte / Corrida</option>
-            <option value="familia">👨‍👩‍👧‍👦 Família</option>
-            <option value="infantil">🧸 Infantil</option>
-          </select>
+        <label>Categoria</label>
+        <select name="categoria">
+          <option value="estrategia">🧠 Estratégia</option>
+          <option value="sorte">🎲 Sorte / Corrida</option>
+          <option value="familia">👨‍👩‍👧‍👦 Família</option>
+          <option value="infantil">🧸 Infantil</option>
+        </select>
 
-          <label>Nota (0 a 5)</label>
-          <input type="number" name="nota" min="0" max="5" step="0.1" placeholder="Ex: 4.5">
+        <label>Nota (0 a 5)</label>
+        <input type="number" name="nota" min="0" max="5" step="0.1" placeholder="Ex: 4.5">
 
-          <label>História</label>
-          <textarea name="historia" rows="3" placeholder="Conte a história do jogo..."></textarea>
+        <label>História</label>
+        <textarea name="historia" rows="3" placeholder="Conte a história do jogo..."></textarea>
 
-          <label>Regras</label>
-          <textarea name="regras" rows="3" placeholder="Descreva as regras principais..."></textarea>
+        <label>Regras</label>
+        <textarea name="regras" rows="3" placeholder="Descreva as regras principais..."></textarea>
 
-          <div class="modal-actions">
-            <button type="button" onclick="fecharModalBtn()">Cancelar</button>
-            <button type="submit">Salvar Jogo</button>
-          </div>
+        <div class="modal-actions">
+          <button type="button" onclick="fecharModalBtn()">Cancelar</button>
+          <button type="submit">Salvar Jogo</button>
+        </div>
 
-        </form>
-      </div>
+      </form>
     </div>
+  </div>
+<% } %>
   </main>
 
   <footer class="main-footer">

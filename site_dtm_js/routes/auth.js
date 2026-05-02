@@ -62,6 +62,7 @@ router.post('/login', (req, res) => {
 
     if (row) {
       req.session.usuario = usuario;
+      req.session.isAdmin = (usuario === 'adm'); // ← define quem é ADM
       res.redirect('/home');
     } else {
       res.send(`
