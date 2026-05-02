@@ -24,7 +24,11 @@ router.get('/', (req, res) => {
       return { ...jogo, historiaShort };
     });
 
-    res.render('catalogo', { jogos });
+    // Passa isAdmin para o template
+    res.render('catalogo', {
+      jogos,
+      isAdmin: req.session.isAdmin === true
+    });
   });
 });
 
@@ -69,5 +73,4 @@ router.post('/excluir/:id', (req, res) => {
   });
 });
 
-// ← apenas UM module.exports no final
 module.exports = router;
