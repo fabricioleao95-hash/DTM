@@ -38,13 +38,6 @@ db.serialize(() => {
       senha TEXT NOT NULL
     )
   `);
-
-  // Insere ADM se não existir
-  db.run(`
-    INSERT OR IGNORE INTO usuario (nome, usuario, email, telefone, senha)
-    VALUES ('ADM', 'adm', 'adm@tdm.com', '', 'tabuleiro@1234')
-  `);
-
   // Insere jogos apenas se o banco estiver vazio
   db.get(`SELECT COUNT(*) as total FROM jogos_info`, (err, row) => {
     if (err || row.total > 0) return;
