@@ -42,7 +42,7 @@ db.serialize(() => {
   // Insere ADM se não existir
   db.run(`
     INSERT OR IGNORE INTO usuario (nome, usuario, email, telefone, senha)
-    VALUES ('ADM', 'adm', 'adm@tdm.com', '', 'SUA_SENHA_AQUI')
+    VALUES ('ADM', 'adm', 'adm@tdm.com', '', 'tabuleiro@1234')
   `);
 
   // Insere jogos apenas se o banco estiver vazio
